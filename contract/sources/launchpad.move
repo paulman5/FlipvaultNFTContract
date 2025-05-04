@@ -330,6 +330,43 @@ module launchpad_addr::launchpad {
         });
     }
 
+    public entry fun batch_upsert_allowlist(
+    sender: &signer,
+    collection_obj: Object<Collection>,
+    addresses: vector<address>,
+    mint_limit_per_addr: u64
+) acquires Config, CollectionOwnerObjConfig, CollectionConfig {
+    let sender_addr = signer::address_of(sender);
+    let config = borrow_global<Config>(@launchpad_addr);
+    assert!(is_admin(config, sender_addr), EONLY_ADMIN_CAN_UPDATE_MINT_ENABLED); // Reuse appropriate error code
+
+    let collection_config = borrow_global<CollectionConfig>(object::object_address(&collection_obj));
+    let collection_owner_obj = collection_config.collection_owner_obj;
+    let collection_owner_config = borrow_global<CollectionOwnerObjConfig>(
+        object::object_address(&collection_owner_obj)
+    );
+    let collection_owner_obj_signer = &object::generate_signer_for_extending(&collection_owner_config.extend_ref);
+
+    let stage_idx = mint_stage::find_mint_stage_index_by_name(
+        collection_obj,
+        string::utf8(b"Allowlist mint stage"),
+    );
+
+    let i = 0;
+    let num_addresses = vector::length(&addresses);
+    while (i < num_addresses) {
+    mint_stage::upsert_allowlist(
+        collection_owner_obj_signer,
+        collection_obj,
+        stage_idx,
+        *vector::borrow(&addresses, i),
+        mint_limit_per_addr,
+    );
+        i = i + 1;
+    };
+}
+
+
     /// Mint NFT, anyone with enough mint fee and has not reached mint limit can mint FA
     /// If we are in allowlist stage, only addresses in allowlist can mint FA
     public entry fun mint_nft(
