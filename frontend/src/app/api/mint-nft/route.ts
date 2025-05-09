@@ -16,7 +16,7 @@ const account = AptosAccount.fromAptosAccountObject({
 const LAUNCHPAD_ADDRESS =
   "0xb987f44f1cc3173c96f13c5735e7dd1707d1a476016e0c554ad396d209683417"
 const COLLECTION_OBJECT_ADDRESS =
-  "0x729a8dc468da7039377f17ff2c110b6be2a3357ffce0272433137ec6495c4a9a"
+  "0xb212388936b130efde42230ed85f3b0f1a2f5aa8bd7375ec0e40f03c6c1e4f5c"
 
 export async function POST() {
   try {

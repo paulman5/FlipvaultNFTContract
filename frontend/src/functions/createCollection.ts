@@ -17,7 +17,7 @@ const LAUNCHPAD_ADDRESS =
   "0xb987f44f1cc3173c96f13c5735e7dd1707d1a476016e0c554ad396d209683417"
 
 const collectionURI =
-  "ipfs://bafybeidf5gbkwswdibry2gi66vjd4fe7foevpn5rdfofzizgrzgr5gywua/collection.json"
+  "https://bafybeibqqgymuxsi5qnemyxpijg6ym35hzcf4prkz2gnguwxytvq4uaqhe.ipfs.w3s.link/collection.json"
 const allowlist: string[] = [] // optional, array of addresses
 const startTime = Math.floor(Date.now() / 1000) // now
 const endTime = startTime + 60 * 60 * 24 * 7 // 7 days laterc
@@ -28,8 +28,8 @@ async function main() {
     function: `${LAUNCHPAD_ADDRESS}::launchpad::create_collection`,
     type_arguments: [],
     arguments: [
-      "Flipvault NFT Collection", // description
-      "FlipvaultOG", // name
+      "Flipvault NFT OG Collection launch", // description
+      "Flipvault NFT Genesis Collection", // name
       collectionURI, // uri
       10000, // max_supply
       null, // royalty_percentage

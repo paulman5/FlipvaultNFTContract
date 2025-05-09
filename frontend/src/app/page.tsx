@@ -26,7 +26,7 @@ export default function Home() {
 
       const data = await res.json()
       if (data.success) {
-        setStatus(`✅ NFT Minted! Txn: ${data.hash}`)
+        setStatus("✅ NFT Minted")
       } else {
         setStatus(`❌ Mint failed, not on Allowlist`)
       }
